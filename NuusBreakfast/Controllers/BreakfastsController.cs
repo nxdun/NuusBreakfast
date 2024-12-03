@@ -8,23 +8,54 @@ using NuusBreakfast.Contracts.Breakfast;
 [Route("[controller]")]  //This will use the name of the controller as the route prefix
 public class BreakfastsController : ControllerBase
 {
+    private readonly IBreakfastService _breakfastService;
+    public BreakfastsController(IBreakfastService breakfastService)
+    {
+        _breakfastService = breakfastService;
+    }
+
+
     //Post request to create a breakfast
     [HttpPost()]
     public IActionResult CreateBreakfast(CreateBreakfastRequest request)
     {
-        //map the request data to the breakfast object
-        Breakfast breakfast = new Breakfast(
-            Guid.NewGuid(),
-            request.Name,
-            request.Desc,
-            request.StartDateTime,
-            request.EndDateTime,
-            DateTime.UtcNow,
-            request.Savory,
-            request.Sweet);
-        //database operation
+    Console.WriteLine("CreateBreakfast endpoint hit");
+    var breakfast = new Breakfast(
+        Guid.NewGuid(),
+        request.Name,
+        request.Desc,
+        request.StartDateTime,
+        request.EndDateTime,
+        DateTime.UtcNow,
+        request.Savory,
+        request.Sweet);
 
-        //taking back data from system/db and returning it to the client
+    _breakfastService.CreateBreakfast(breakfast);
+
+    var response = new BreakfastResponse(
+        breakfast.Id,
+        breakfast.Name,
+        breakfast.Desc,
+        breakfast.StartDateTime,
+        breakfast.EndDateTime,
+        breakfast.LastModifiedDateTime,
+        breakfast.Savory,
+        breakfast.Sweet);
+
+    return CreatedAtAction(nameof(GetBreakfast), new { id = response.Id }, response);
+    }
+
+    //Get request to create a breakfast
+    [HttpGet("{id:guid}")]
+    public IActionResult GetBreakfast(Guid id)
+    {
+    try
+    {
+        Breakfast breakfast = _breakfastService.GetBreakfast(id);
+
+        //print the breakfast object to the console
+        Console.WriteLine("Breakfast ",breakfast);
+
         var response = new BreakfastResponse(
             breakfast.Id,
             breakfast.Name ?? string.Empty,
@@ -36,14 +67,14 @@ public class BreakfastsController : ControllerBase
             breakfast.Sweet ?? new List<string>()
         );
 
-        return CreatedAtAction(nameof(GetBreakfast), new { id = response.Id }, response);
+        Console.WriteLine("Response ",response);
+        return Ok(response);
     }
-
-    //Get request to create a breakfast
-    [HttpGet("{id:guid}")]
-    public IActionResult GetBreakfast(Guid id)
+    catch (KeyNotFoundException ex)
     {
-        return Ok(id);
+        // Log the exception if needed
+        return NotFound(new { message = ex.Message });
+    }
     }
 
     //Put request to create a breakfast
@@ -58,5 +89,5 @@ public class BreakfastsController : ControllerBase
     public IActionResult DeleteBreakfast(Guid id)
     {
         return Ok(id);
-    }
+    }  
 }

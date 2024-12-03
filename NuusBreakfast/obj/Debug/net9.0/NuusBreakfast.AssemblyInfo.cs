@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NuusBreakfast")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eaf73c3c889b465f181e0bd3c32fb3f423dc120a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e3fa33e7abc7aa63496a6ff6e311aafcf3210e0b")]
 [assembly: System.Reflection.AssemblyProductAttribute("NuusBreakfast")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NuusBreakfast")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
