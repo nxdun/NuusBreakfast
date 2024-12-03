@@ -1,9 +1,11 @@
-POST http://localhost:5096/breakfasts
+@id=00000000-0000-0000-0000-000000000000
+
+PUT http://localhost:5096/breakfasts/{{id}}
 Content-Type: application/json
 
 {
-    "name": "Vegan Sunshine",
-    "Desc": "Vegan everything! Join us for a healthy breakfast.",
+    "name": "VVegan SSunshiners",
+    "Desc": "Vegan everything! Join us for a healthy breakfast..",
     "startDateTime": "2022-04-08T08:00:00",
     "endDateTime": "2022-04-08T11:00:00",
     "savory": [
