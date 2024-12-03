@@ -32,5 +32,13 @@ public class BreakfastService : IBreakfastService
         throw new KeyNotFoundException($"Breakfast with ID '{id}' was not found.");
     }
 
-    
+    public void DeleteBreakfast(Guid id)
+    {
+        _breakfasts.Remove(id);
+    }
+
+    public void UpsertBreakfast(Breakfast breakfast)
+    {
+        _breakfasts[breakfast.Id] = breakfast;
+    }
 }
